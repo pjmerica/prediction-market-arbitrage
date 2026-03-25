@@ -29,12 +29,15 @@ def fetch_polymarket():
                 continue
             if yes_price is None:
                 continue
+            slug = m.get("slug", "")
+            market_url = f"https://polymarket.com/event/{slug}" if slug else ""
             markets.append({
                 "question": m["question"],
                 "yes": yes_price,
                 "no": no_price or (100 - yes_price),
                 "volume": m.get("volume24hr", 0),
                 "category": m.get("category", ""),
+                "url": market_url,
             })
     except Exception as e:
         print(f"Polymarket fetch error: {e}")
@@ -58,7 +61,10 @@ def fetch_kalshi():
             resp.raise_for_status()
             data = resp.json()
             for ev in data.get("events", []):
-                event_cats[ev["event_ticker"]] = ev.get("category", "")
+                event_cats[ev["event_ticker"]] = {
+                    "category": ev.get("category", ""),
+                    "slug": ev.get("event_ticker", ""),
+                }
             cursor = data.get("cursor")
             if not cursor or not data.get("events"):
                 break
@@ -86,12 +92,16 @@ def fetch_kalshi():
                     continue
                 if yes_price <= 0 or yes_price >= 100:
                     continue
-                cat = event_cats.get(m.get("event_ticker", ""), "")
+                ev_info = event_cats.get(m.get("event_ticker", ""), {})
+                cat = ev_info.get("category", "") if isinstance(ev_info, dict) else ev_info
+                event_ticker = m.get("event_ticker", "")
+                market_url = f"https://kalshi.com/markets/{event_ticker}" if event_ticker else ""
                 markets.append({
                     "question": question,
                     "yes": yes_price,
                     "no": no_price,
                     "category": cat,
+                    "url": market_url,
                 })
             cursor = data.get("cursor")
             if not cursor or not data.get("markets"):
@@ -123,11 +133,14 @@ def fetch_predictit():
                 cname = contract.get("name", "")
                 if cname and cname != question:
                     question = f"{question}: {cname}"
+                mkt_id = mkt.get("id", "")
+                market_url = f"https://www.predictit.org/markets/detail/{mkt_id}" if mkt_id else ""
                 markets.append({
                     "question": question,
                     "yes": yes_cents,
                     "no": 100 - yes_cents,
                     "category": "",
+                    "url": market_url,
                 })
     except Exception as e:
         print(f"PredictIt fetch error: {e}")
@@ -190,12 +203,12 @@ def match_markets(poly, kalshi, predictit):
                 best_pi_score = score
 
         if best_kalshi is not None or best_pi is not None:
-            platforms = {"polymarket": {"yes": pm["yes"], "no": pm["no"]}}
+            platforms = {"polymarket": {"yes": pm["yes"], "no": pm["no"], "url": pm.get("url", "")}}
             if best_kalshi is not None:
-                platforms["kalshi"] = {"yes": kalshi[best_kalshi]["yes"], "no": kalshi[best_kalshi]["no"]}
+                platforms["kalshi"] = {"yes": kalshi[best_kalshi]["yes"], "no": kalshi[best_kalshi]["no"], "url": kalshi[best_kalshi].get("url", "")}
                 used_kalshi.add(best_kalshi)
             if best_pi is not None:
-                platforms["predictit"] = {"yes": predictit[best_pi]["yes"], "no": predictit[best_pi]["no"]}
+                platforms["predictit"] = {"yes": predictit[best_pi]["yes"], "no": predictit[best_pi]["no"], "url": predictit[best_pi].get("url", "")}
                 used_predictit.add(best_pi)
 
             cat = pm.get("category") or ""
@@ -216,7 +229,7 @@ def match_markets(poly, kalshi, predictit):
             matched.append({
                 "category": cat,
                 "question": km["question"],
-                "platforms": {"kalshi": {"yes": km["yes"], "no": km["no"]}},
+                "platforms": {"kalshi": {"yes": km["yes"], "no": km["no"], "url": km.get("url", "")}},
             })
 
     # Add unmatched PredictIt markets
@@ -226,7 +239,7 @@ def match_markets(poly, kalshi, predictit):
             matched.append({
                 "category": cat,
                 "question": pim["question"],
-                "platforms": {"predictit": {"yes": pim["yes"], "no": pim["no"]}},
+                "platforms": {"predictit": {"yes": pim["yes"], "no": pim["no"], "url": pim.get("url", "")}},
             })
 
     # Add unmatched Polymarket markets
@@ -240,7 +253,7 @@ def match_markets(poly, kalshi, predictit):
             matched.append({
                 "category": cat,
                 "question": pm["question"],
-                "platforms": {"polymarket": {"yes": pm["yes"], "no": pm["no"]}},
+                "platforms": {"polymarket": {"yes": pm["yes"], "no": pm["no"], "url": pm.get("url", "")}},
             })
 
     return matched
