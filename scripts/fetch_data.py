@@ -10,35 +10,40 @@ from datetime import datetime, timezone
 
 
 def fetch_polymarket():
-    """Fetch active markets from Polymarket Gamma API."""
+    """Fetch active events from Polymarket Gamma API (events endpoint for correct URLs)."""
     markets = []
-    url = "https://gamma-api.polymarket.com/markets"
+    url = "https://gamma-api.polymarket.com/events"
     params = {"active": "true", "closed": "false", "limit": 100, "order": "volume24hr", "ascending": "false"}
     try:
         resp = requests.get(url, params=params, timeout=30)
         resp.raise_for_status()
         data = resp.json()
-        for m in data:
-            if not m.get("question"):
+        for ev in data:
+            event_slug = ev.get("slug", "")
+            event_url = f"https://polymarket.com/event/{event_slug}" if event_slug else ""
+            # Each event can have multiple markets
+            event_markets = ev.get("markets", [])
+            if not event_markets:
                 continue
-            try:
-                prices = json.loads(m.get("outcomePrices", "[]"))
-                yes_price = round(float(prices[0]) * 100) if len(prices) > 0 else None
-                no_price = round(float(prices[1]) * 100) if len(prices) > 1 else None
-            except (json.JSONDecodeError, ValueError, IndexError):
-                continue
-            if yes_price is None:
-                continue
-            slug = m.get("slug", "")
-            market_url = f"https://polymarket.com/event/{slug}" if slug else ""
-            markets.append({
-                "question": m["question"],
-                "yes": yes_price,
-                "no": no_price or (100 - yes_price),
-                "volume": m.get("volume24hr", 0),
-                "category": m.get("category", ""),
-                "url": market_url,
-            })
+            for m in event_markets:
+                if not m.get("question"):
+                    continue
+                try:
+                    prices = json.loads(m.get("outcomePrices", "[]"))
+                    yes_price = round(float(prices[0]) * 100) if len(prices) > 0 else None
+                    no_price = round(float(prices[1]) * 100) if len(prices) > 1 else None
+                except (json.JSONDecodeError, ValueError, IndexError):
+                    continue
+                if yes_price is None:
+                    continue
+                markets.append({
+                    "question": m.get("question", ev.get("title", "")),
+                    "yes": yes_price,
+                    "no": no_price or (100 - yes_price),
+                    "volume": m.get("volume24hr", 0),
+                    "category": m.get("category", ""),
+                    "url": event_url,
+                })
     except Exception as e:
         print(f"Polymarket fetch error: {e}")
     return markets
