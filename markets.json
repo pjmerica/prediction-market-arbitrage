@@ -1,0 +1,162 @@
+{
+  "lastUpdated": "2026-03-25",
+  "markets": [
+    {
+      "category": "Politics",
+      "question": "Will the US have a government shutdown in 2026?",
+      "platforms": {
+        "polymarket": { "yes": 62, "no": 38 },
+        "kalshi": { "yes": 58, "no": 42 },
+        "predictit": { "yes": 65, "no": 35 }
+      }
+    },
+    {
+      "category": "Politics",
+      "question": "Will Biden run for president in 2028?",
+      "platforms": {
+        "polymarket": { "yes": 5, "no": 95 },
+        "kalshi": { "yes": 8, "no": 92 }
+      }
+    },
+    {
+      "category": "Politics",
+      "question": "Will a new US federal agency be created in 2026?",
+      "platforms": {
+        "polymarket": { "yes": 18, "no": 82 },
+        "kalshi": { "yes": 22, "no": 78 }
+      }
+    },
+    {
+      "category": "Sports",
+      "question": "Will the Chiefs win Super Bowl LXI?",
+      "platforms": {
+        "polymarket": { "yes": 12, "no": 88 },
+        "kalshi": { "yes": 10, "no": 90 },
+        "predictit": { "yes": 14, "no": 86 }
+      }
+    },
+    {
+      "category": "Sports",
+      "question": "Will LeBron James retire before the 2026-27 NBA season?",
+      "platforms": {
+        "polymarket": { "yes": 35, "no": 65 },
+        "kalshi": { "yes": 30, "no": 70 }
+      }
+    },
+    {
+      "category": "Sports",
+      "question": "Will a player throw for 6000+ yards in the 2026 NFL season?",
+      "platforms": {
+        "polymarket": { "yes": 8, "no": 92 },
+        "kalshi": { "yes": 12, "no": 88 }
+      }
+    },
+    {
+      "category": "Crypto",
+      "question": "Will Bitcoin be above $150k on Dec 31, 2026?",
+      "platforms": {
+        "polymarket": { "yes": 42, "no": 58 },
+        "kalshi": { "yes": 38, "no": 62 },
+        "predictit": { "yes": 45, "no": 55 }
+      }
+    },
+    {
+      "category": "Crypto",
+      "question": "Will Ethereum flip Bitcoin in market cap in 2026?",
+      "platforms": {
+        "polymarket": { "yes": 3, "no": 97 },
+        "kalshi": { "yes": 5, "no": 95 }
+      }
+    },
+    {
+      "category": "Crypto",
+      "question": "Will a US Bitcoin ETF exceed $100B AUM in 2026?",
+      "platforms": {
+        "polymarket": { "yes": 55, "no": 45 },
+        "kalshi": { "yes": 50, "no": 50 }
+      }
+    },
+    {
+      "category": "Economics",
+      "question": "Will the Fed cut rates in Q3 2026?",
+      "platforms": {
+        "polymarket": { "yes": 48, "no": 52 },
+        "kalshi": { "yes": 42, "no": 58 },
+        "predictit": { "yes": 52, "no": 48 }
+      }
+    },
+    {
+      "category": "Economics",
+      "question": "Will US unemployment exceed 5% in 2026?",
+      "platforms": {
+        "polymarket": { "yes": 22, "no": 78 },
+        "kalshi": { "yes": 18, "no": 82 }
+      }
+    },
+    {
+      "category": "Economics",
+      "question": "Will US GDP growth exceed 3% in 2026?",
+      "platforms": {
+        "polymarket": { "yes": 30, "no": 70 },
+        "kalshi": { "yes": 35, "no": 65 }
+      }
+    },
+    {
+      "category": "Entertainment",
+      "question": "Will a Marvel movie gross $2B+ worldwide in 2026?",
+      "platforms": {
+        "polymarket": { "yes": 15, "no": 85 },
+        "kalshi": { "yes": 18, "no": 82 }
+      }
+    },
+    {
+      "category": "Entertainment",
+      "question": "Will GTA VI release in 2026?",
+      "platforms": {
+        "polymarket": { "yes": 72, "no": 28 },
+        "kalshi": { "yes": 65, "no": 35 }
+      }
+    },
+    {
+      "category": "Tech",
+      "question": "Will Apple release AR glasses in 2026?",
+      "platforms": {
+        "polymarket": { "yes": 20, "no": 80 },
+        "kalshi": { "yes": 25, "no": 75 }
+      }
+    },
+    {
+      "category": "Tech",
+      "question": "Will OpenAI IPO in 2026?",
+      "platforms": {
+        "polymarket": { "yes": 28, "no": 72 },
+        "kalshi": { "yes": 32, "no": 68 }
+      }
+    },
+    {
+      "category": "Tech",
+      "question": "Will TikTok be banned in the US by end of 2026?",
+      "platforms": {
+        "polymarket": { "yes": 15, "no": 85 },
+        "kalshi": { "yes": 20, "no": 80 },
+        "predictit": { "yes": 12, "no": 88 }
+      }
+    },
+    {
+      "category": "Climate",
+      "question": "Will 2026 be the hottest year on record?",
+      "platforms": {
+        "polymarket": { "yes": 55, "no": 45 },
+        "kalshi": { "yes": 50, "no": 50 }
+      }
+    },
+    {
+      "category": "Climate",
+      "question": "Will a Category 6 hurricane classification be adopted in 2026?",
+      "platforms": {
+        "polymarket": { "yes": 8, "no": 92 },
+        "kalshi": { "yes": 12, "no": 88 }
+      }
+    }
+  ]
+}
