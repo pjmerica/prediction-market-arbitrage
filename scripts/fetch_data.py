@@ -97,10 +97,11 @@ def fetch_kalshi():
                     continue
                 if yes_price <= 0 or yes_price >= 100:
                     continue
-                ev_info = event_cats.get(m.get("event_ticker", ""), {})
-                cat = ev_info.get("category", "") if isinstance(ev_info, dict) else ev_info
                 event_ticker = m.get("event_ticker", "")
-                market_url = f"https://kalshi.com/markets/{event_ticker}" if event_ticker else ""
+                ev_info = event_cats.get(event_ticker, {})
+                cat = ev_info.get("category", "") if isinstance(ev_info, dict) else ev_info
+                market_ticker = m.get("ticker", "")
+                market_url = f"https://kalshi.com/markets/{market_ticker}" if market_ticker else ""
                 markets.append({
                     "question": question,
                     "yes": yes_price,
